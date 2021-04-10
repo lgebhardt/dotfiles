@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# Quick shortcut to fork
+#
+# USAGE:
+#
+#   $ f
+#   # => opens the current directory in `fork`
+#
+#   $ f .
+#   $ f /usr/local
+#   # => opens the specified directory in `fork`
+exec "fork" "${1:-.}"
