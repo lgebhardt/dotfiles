@@ -1,4 +1,4 @@
-# dgeb's dotfiles
+# lgebhardt's dotfiles
 
 Many thanks to [Zach Holman](https://github.com/holman) for providing the basis
 for these dotfiles in [this repo](https://github.com/holman/dotfiles).
@@ -44,7 +44,7 @@ There's a few special files in the hierarchy.
 Run this:
 
 ```sh
-git clone https://github.com/dgeb/dotfiles.git ~/.dotfiles
+git clone https://github.com/lgebhardt/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
 script/bootstrap
 ```
