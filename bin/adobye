@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# Based on https://apple.stackexchange.com/questions/392280/how-do-i-remove-or-disable-adobe-registration-request-and-kill-adobe-ipc-adobec
+
+# ask root password
+sudo echo -n
+
+echo "Deactivating Core Sync Finder extension"
+pluginkit -e ignore -i com.adobe.accmac.ACCFinderSync
+# uncomment to completely remove the extension
+# pluginkit -r "/Applications/Utilities/Adobe Sync/CoreSync/Core Sync.app/Contents/PlugIns/ACCFinderSync.appex"
+
+echo "Removing plist files"
+sudo rm -f /Library/LaunchAgents/com.adobe.*.plist
+sudo rm -f /Library/LaunchDaemons/com.adobe.*.plist
+rm -f ~/Library/LaunchAgents/com.adobe.*.plist
+
+for SERVICE in $(launchctl list | grep "com.adobe" | cut -f3)
+do
+    echo "Removing service ${SERVICE}"
+    launchctl remove $SERVICE
+done
+
+# Add processes to this list if needed,
+# sometimes their name might change or there might be others,
+# depending on which adobe product was used.
+# You can use the Activity monitor app to check for potential rogue processes
+PROCESSES=(
+"ACCFinderSync"
+"CoreSync"
+"Core Sync"
+"Creative Cloud Helper"
+"Core Sync Helper"
+"AdobeCRDaemon"
+"Adobe Crash Handler"
+"Adobe Creative"
+"AdobeIPCBroker"
+"Adobe Desktop Service"
+"Adobe Crash Reporter"
+"com.adobe.acc.installer.v2"
+)
+
+for p in "${PROCESSES[@]}"
+do
+    echo "Killing process ${p}"
+    sudo -H killall "${p}" 2> /dev/null
+done
