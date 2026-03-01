@@ -55,18 +55,39 @@ export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
 
 #export LDFLAGS="-L/opt/homebrew/opt/libffi/lib"
-export LDFLAGS="-L/opt/homebrew/opt/libpq/lib $LDFLAGS"
-export LDFLAGS="-L/opt/homebrew/opt/zlib/lib $LDFLAGS"
+#export LDFLAGS="-L/opt/homebrew/opt/libpq/lib $LDFLAGS"
+#export LDFLAGS="-L/opt/homebrew/opt/zlib/lib $LDFLAGS"
 
 #export CPPFLAGS="-I/opt/homebrew/opt/libffi/include $CPPFLAGS"
-export CPPFLAGS="-I/opt/homebrew/opt/libpq/include $CPPFLAGS"
-export CPPFLAGS="-I/opt/homebrew/opt/zlib/include $CPPFLAGS"
+#export CPPFLAGS="-I/opt/homebrew/opt/libpq/include $CPPFLAGS"
+#export CPPFLAGS="-I/opt/homebrew/opt/zlib/include $CPPFLAGS"
 
 #export PKG_CONFIG_PATH="/opt/homebrew/opt/libffi/lib/pkgconfig"
-export PKG_CONFIG_PATH="/opt/homebrew/opt/zlib/lib/pkgconfig:$PKG_CONFIG_PATH"
+#export PKG_CONFIG_PATH="/opt/homebrew/opt/zlib/lib/pkgconfig:$PKG_CONFIG_PATH"
 
-export GUILE_LOAD_PATH="/opt/homebrew/share/guile/site/3.0"
-export GUILE_LOAD_COMPILED_PATH="/opt/homebrew/lib/guile/3.0/site-ccache"
-export GUILE_SYSTEM_EXTENSIONS_PATH="/opt/homebrew/lib/guile/3.0/extensions"
+#export GUILE_LOAD_PATH="/opt/homebrew/share/guile/site/3.0"
+#export GUILE_LOAD_COMPILED_PATH="/opt/homebrew/lib/guile/3.0/site-ccache"
+#export GUILE_SYSTEM_EXTENSIONS_PATH="/opt/homebrew/lib/guile/3.0/extensions"
 
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+export DISABLE_SPRING=true
+# bun completions
+[ -s "/Users/larry/.bun/_bun" ] && source "/Users/larry/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# pnpm
+export PNPM_HOME="/Users/larry/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/larry/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
