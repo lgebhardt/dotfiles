@@ -41,7 +41,14 @@ There's a few special files in the hierarchy.
 
 ## install
 
-Run this:
+On a fresh Mac, install Xcode Command Line Tools first. This provides Git and
+other basic developer tools:
+
+```sh
+xcode-select --install
+```
+
+Then run:
 
 ```sh
 git clone https://github.com/lgebhardt/dotfiles.git ~/.dotfiles
@@ -66,3 +73,38 @@ install the larger optional toolchain, run:
 ```sh
 DOTFILES_INSTALL_EXTRAS=1 script/bootstrap
 ```
+
+## new machine checklist
+
+1. Install Xcode Command Line Tools:
+
+   ```sh
+   xcode-select --install
+   ```
+
+2. Clone the repo:
+
+   ```sh
+   git clone https://github.com/lgebhardt/dotfiles.git ~/.dotfiles
+   cd ~/.dotfiles
+   ```
+
+3. Optionally create `~/.localrc` for machine-specific environment variables
+   and overrides.
+
+4. Run the base bootstrap:
+
+   ```sh
+   script/bootstrap
+   ```
+
+5. If this machine still needs the optional toolchain, install extras too:
+
+   ```sh
+   DOTFILES_INSTALL_EXTRAS=1 script/bootstrap
+   ```
+
+6. Open a new shell so PATH and Homebrew environment changes are loaded.
+
+7. Install anything not managed here, such as App Store apps, Docker Desktop,
+   SSH keys, and language-specific runtimes.
