@@ -52,10 +52,17 @@ script/bootstrap
 This will symlink the appropriate files in `.dotfiles` to your home directory.
 Everything is configured and tweaked within `~/.dotfiles`.
 
-The main file you'll want to change right off the bat is `zsh/zshrc.symlink`,
-which sets up a few paths that'll be different on your particular machine.
+Put machine-specific environment variables and overrides in `~/.localrc`.
+Keep repo-tracked shell files portable so a new machine can bootstrap cleanly.
 
 `dot` is a simple script that installs some dependencies, sets sane macOS
 defaults, and so on. Tweak this script, and occasionally run `dot` from
 time to time to keep your environment fresh and up-to-date. You can find
 this script in `bin/`.
+
+By default the Homebrew install only applies the base package set. To also
+install the larger optional toolchain, run:
+
+```sh
+DOTFILES_INSTALL_EXTRAS=1 script/bootstrap
+```

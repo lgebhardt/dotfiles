@@ -28,6 +28,11 @@ do
   source $file
 done
 
+# Add extra completion directories before compinit runs.
+if [ -d "$HOME/.docker/completions" ]; then
+  fpath=("$HOME/.docker/completions" $fpath)
+fi
+
 # initialize autocomplete here, otherwise functions won't be loaded
 autoload -U compinit
 compinit
@@ -50,7 +55,9 @@ bindkey "^[[A" up-line-or-beginning-search # Up
 bindkey "^[[B" down-line-or-beginning-search # Down
 
 autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /opt/homebrew/bin/terraform terraform
+if command -v terraform >/dev/null 2>&1; then
+  complete -o nospace -C "$(command -v terraform)" terraform
+fi
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
 
@@ -69,27 +76,27 @@ export PATH="$VOLTA_HOME/bin:$PATH"
 #export GUILE_LOAD_COMPILED_PATH="/opt/homebrew/lib/guile/3.0/site-ccache"
 #export GUILE_SYSTEM_EXTENSIONS_PATH="/opt/homebrew/lib/guile/3.0/extensions"
 
-export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl)"
+if command -v brew >/dev/null 2>&1; then
+  if brew --prefix openssl@3 >/dev/null 2>&1; then
+    export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@3)"
+  elif brew --prefix openssl >/dev/null 2>&1; then
+    export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl)"
+  fi
+fi
 
 #export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 #export DISABLE_SPRING=true
 # bun completions
-[ -s "/Users/larry/.bun/_bun" ] && source "/Users/larry/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
 # pnpm
-export PNPM_HOME="/Users/larry/Library/pnpm"
+export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
-
-# The following lines have been added by Docker Desktop to enable Docker CLI completions.
-fpath=(/Users/larry/.docker/completions $fpath)
-autoload -Uz compinit
-compinit
-# End of Docker CLI completions

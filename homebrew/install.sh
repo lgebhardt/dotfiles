@@ -6,7 +6,7 @@
 # using Homebrew.
 
 # Check for Homebrew
-if test ! $(which brew)
+if ! command -v brew >/dev/null 2>&1
 then
   echo "  Installing Homebrew for you."
 
@@ -16,12 +16,38 @@ then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   elif test "$(expr substr $(uname -s) 1 5)" = "Linux"
   then
-    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install)"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   fi
 
 fi
 
-echo "  Installing Homebrew applications"
-brew bundle install --file $ZSH/homebrew/Brewfile
+if ! command -v brew >/dev/null 2>&1
+then
+  if [ -x /opt/homebrew/bin/brew ]
+  then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  elif [ -x /usr/local/bin/brew ]
+  then
+    eval "$(/usr/local/bin/brew shellenv)"
+  fi
+fi
+
+if ! command -v brew >/dev/null 2>&1
+then
+  echo "  Homebrew install did not make 'brew' available on PATH."
+  echo "  Start a new shell and re-run the installer."
+  exit 1
+fi
+
+echo "  Installing Homebrew base applications"
+brew bundle install --file "$ZSH/homebrew/Brewfile"
+
+if [ "${DOTFILES_INSTALL_EXTRAS:-0}" = "1" ]
+then
+  echo "  Installing Homebrew extras"
+  brew bundle install --file "$ZSH/homebrew/Brewfile.extra"
+else
+  echo "  Skipping optional Homebrew extras (set DOTFILES_INSTALL_EXTRAS=1 to install them)"
+fi
 
 exit 0
