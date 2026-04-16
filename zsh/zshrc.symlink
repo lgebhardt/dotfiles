@@ -69,8 +69,10 @@ export PATH="$VOLTA_HOME/bin:$PATH"
 #export GUILE_LOAD_COMPILED_PATH="/opt/homebrew/lib/guile/3.0/site-ccache"
 #export GUILE_SYSTEM_EXTENSIONS_PATH="/opt/homebrew/lib/guile/3.0/extensions"
 
-export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
-export DISABLE_SPRING=true
+export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl)"
+
+#export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+#export DISABLE_SPRING=true
 # bun completions
 [ -s "/Users/larry/.bun/_bun" ] && source "/Users/larry/.bun/_bun"
 
