@@ -1,7 +1,11 @@
 tap "homebrew/bundle"
 tap "homebrew/core"
 
+# Infrastructure and CLI tools
 brew "awscli"
+brew "terraform"
+
+# Language runtimes and build support
 brew "bison"
 brew "ca-certificates"
 brew "dnsmasq"
@@ -17,6 +21,5 @@ brew "python"
 brew "readline"
 brew "rbenv"
 brew "ruby-build"
-brew "terraform"
 brew "zlib"
 brew "zstd"
