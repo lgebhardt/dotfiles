@@ -1,0 +1,6 @@
+# Managed by dotfiles.
+#
+# Keep dnsmasq.d/*.conf focused on domain- or environment-specific rules.
+# Put only global dnsmasq settings in this file.
+
+conf-dir={{BREW_PREFIX}}/etc/dnsmasq.d,*.conf
