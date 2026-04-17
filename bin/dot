@@ -6,6 +6,7 @@
 # to make sure you're on the latest and greatest.
 
 set -e
+set -o pipefail
 
 parentDirectory="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd -P)"
 dotfilesDirectory="$(cd "$( dirname "$parentDirectory" )" && pwd -P)"
@@ -40,11 +41,24 @@ done
 
 export ZSH=$HOME/.dotfiles
 
+ensure_brew_on_path() {
+	if command -v brew >/dev/null 2>&1; then
+		return 0
+	fi
+
+	if [ -x /opt/homebrew/bin/brew ]; then
+		eval "$(/opt/homebrew/bin/brew shellenv)"
+	elif [ -x /usr/local/bin/brew ]; then
+		eval "$(/usr/local/bin/brew shellenv)"
+	fi
+}
+
 # Set macOS defaults
 $ZSH/macos/set-defaults.sh
 
 # Install homebrew
 $ZSH/homebrew/install.sh 2>&1
+ensure_brew_on_path
 
 # Upgrade homebrew
 echo "› brew update"

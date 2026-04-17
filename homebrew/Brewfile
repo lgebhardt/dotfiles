@@ -1,9 +1,13 @@
 tap "homebrew/bundle"
 tap "homebrew/core"
+tap "hashicorp/tap"
 
 # Infrastructure and CLI tools
 brew "awscli"
-brew "terraform"
+brew "hashicorp/tap/terraform"
+
+# Core apps
+cask "lulu"
 
 # Language runtimes and build support
 brew "bison"
