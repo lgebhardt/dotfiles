@@ -44,3 +44,7 @@ brew "mpfr"
 brew "p7zip"
 brew "pkg-config"
 brew "ripgrep"
+
+# AI
+cask "codex"
+cask "lm-studio"
