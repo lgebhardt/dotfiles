@@ -1,0 +1,23 @@
+[profile]
+profile = "gemma-4-31b"
+
+[model_providers.lm_studio]
+name = "LM Studio"
+base_url = "http://localhost:1234/v1"
+
+[profiles."gemma-4-31b"]
+model_provider = "lm_studio"
+model = "gemma-4-31b-it-mlx@8bit"
+model_context_window = 65536
+
+[profiles."qwen3.6-35b-a3b"]
+model_provider = "lm_studio"
+model = "qwen/qwen3.6-35b-a3b"
+model_context_window = 131072
+
+[profiles."qwen-plan"]
+model_provider = "lm_studio"
+model = "qwen/qwen3.6-35b-a3b"
+model_context_window = 131072
+sandbox_mode = "read-only"
+approval_policy = "on-request"

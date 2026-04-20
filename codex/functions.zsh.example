@@ -1,0 +1,51 @@
+codex-profile-value() {
+  local profile_key="$1"
+  local field="$2"
+
+  eval "printf '%s' \"\${CODEX_PROFILE_${profile_key}[${field}]}\""
+}
+
+codex-run() {
+  local name="$1"
+  shift
+
+  local profile_key="${name//-/_}"
+  local profile_name provider lm_model context sandbox approval
+
+  profile_name="$(codex-profile-value "$profile_key" profile)"
+
+  if [[ -z "$profile_name" ]]; then
+    echo "Unknown Codex profile: $name" >&2
+    return 1
+  fi
+
+  provider="$(codex-profile-value "$profile_key" provider)"
+  lm_model="$(codex-profile-value "$profile_key" lm_model)"
+  context="$(codex-profile-value "$profile_key" context)"
+  sandbox="$(codex-profile-value "$profile_key" sandbox)"
+  approval="$(codex-profile-value "$profile_key" approval)"
+
+  if [[ "$provider" == "lm_studio" ]]; then
+    echo "==> Loading ${lm_model} (${context} context)..."
+    lms unload --all || return 1
+    lms load "$lm_model" --context-length "$context" || return 1
+    echo
+    lms ps
+    echo
+  fi
+
+  local -a args
+  args=(--profile "$profile_name")
+  [[ -n "$sandbox" ]] && args+=(--sandbox "$sandbox")
+  [[ -n "$approval" ]] && args+=(--ask-for-approval "$approval")
+
+  codex "${args[@]}" "$@"
+}
+
+for profile_name in "${CODEX_PROFILES[@]}"; do
+  eval "
+codex-${profile_name}() {
+  codex-run ${profile_name:q} \"\$@\"
+}
+"
+done

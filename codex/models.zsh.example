@@ -1,0 +1,35 @@
+typeset -ga CODEX_PROFILES
+CODEX_PROFILES=(
+  openai
+  gemma
+  qwen
+  qwen-plan
+)
+
+typeset -gA CODEX_PROFILE_openai=(
+  profile  openai
+  provider hosted
+)
+
+typeset -gA CODEX_PROFILE_gemma=(
+  profile  gemma-4-31b
+  provider lm_studio
+  lm_model gemma-4-31b-it-mlx@8bit
+  context 65536
+)
+
+typeset -gA CODEX_PROFILE_qwen=(
+  profile   qwen3.6-35b-a3b
+  provider  lm_studio
+  lm_model  qwen/qwen3.6-35b-a3b
+  context   131072
+)
+
+typeset -gA CODEX_PROFILE_qwen_plan=(
+  profile   qwen-plan
+  provider  lm_studio
+  lm_model  qwen/qwen3.6-35b-a3b
+  context   131072
+  sandbox   read-only
+  approval  on-request
+)
