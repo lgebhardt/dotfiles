@@ -48,5 +48,6 @@ brew "pkg-config"
 brew "ripgrep"
 
 # AI
+brew "codex-acp"
 cask "codex"
 cask "lm-studio"
