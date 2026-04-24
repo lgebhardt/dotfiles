@@ -6,6 +6,7 @@ brew "hashicorp/tap/terraform"
 
 # Core apps
 cask "lulu"
+cask "zed"
 
 # Ruby and language runtimes
 brew "bdw-gc"
