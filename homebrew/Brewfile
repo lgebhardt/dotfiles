@@ -46,8 +46,10 @@ brew "mpfr"
 brew "p7zip"
 brew "pkg-config"
 brew "ripgrep"
+brew "tmux"
 
 # AI
 brew "codex-acp"
+brew "pi-coding-agent"
 cask "codex"
 cask "lm-studio"
